@@ -1,9 +1,9 @@
-const { response } = require("express");
+const router = require("express").Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel.js");
 
-const router = require("express").Router();
+const auth = require("../middlewares/auth");
 
 // async so we can wait for promises
 router.post("/register", async (req, res) => {
@@ -11,24 +11,24 @@ router.post("/register", async (req, res) => {
     const { email, password, passwordCheck, username } = req.body;
 
     if (!email || !password || !passwordCheck || !username) {
-      return res.status(400).json({ msg: "Missing required fields." });
+      return res.status(400).json({ message: "Missing required fields." });
     }
 
     if (password.length < 6) {
       return res
         .status(400)
-        .json({ msg: "Password needs to be 6 or more characters." });
+        .json({ message: "Password needs to be 6 or more characters." });
     }
 
     if (password !== passwordCheck) {
-      return res.status(400).json({ msg: "Passwords do not match." });
+      return res.status(400).json({ message: "Passwords do not match." });
     }
 
     const existingUser = await User.findOne({ email: email });
     if (existingUser) {
-      return res
-        .status(400)
-        .json({ msg: "Email is in use. Message admins for more information." });
+      return res.status(400).json({
+        message: "Email is in use. Message admins for more information.",
+      });
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -51,19 +51,19 @@ router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
-      return res.status(400).json({ msg: "Missing required fields." });
+      return res.status(400).json({ message: "Missing required fields." });
     }
 
     const user = await User.findOne({ email: email });
     if (!user) {
       return res
         .status(400)
-        .json({ msg: "No account with this email exists." });
+        .json({ message: "No account with this email exists." });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ msg: "Invalid credentials." });
+      return res.status(400).json({ message: "Invalid credentials." });
     }
 
     // jwt.sign takes a payload and a secret
@@ -76,6 +76,39 @@ router.post("/login", async (req, res) => {
         username: user.username,
       },
     });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.delete("/delete", auth, async (req, res) => {
+  try {
+    const deletedUser = await User.findByIdAndDelete(req.userId);
+    res.json(deletedUser);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.post("/tokenIsValid", async (req, res) => {
+  try {
+    const token = req.header("x-auth-token");
+    if (!token) {
+      return res.json(false);
+    }
+
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    if (!verified) {
+      console.log("user");
+      return res.json(false);
+    }
+
+    const user = await User.findById(verified.id);
+    if (!user) {
+      return res.json(false);
+    }
+
+    return res.json(true);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
