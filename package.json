@@ -1,0 +1,20 @@
+{
+  "name": "react-login-auth-boilerplate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lazypush": "git add . && git commit -m 'lazy push' && git push origin master"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/djdagorne/MERN-login-boilerplate.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/djdagorne/MERN-login-boilerplate/issues"
+  },
+  "homepage": "https://github.com/djdagorne/MERN-login-boilerplate#readme"
+}
