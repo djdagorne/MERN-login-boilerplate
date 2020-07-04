@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import Home from "./components/Pages/Home";
 import Header from "./components/Header/Header";
-/* import Footer from "./components/Footer/Footer";*/
+import Footer from "./components/Footer/Footer";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
 
@@ -18,7 +18,7 @@ export default function App() {
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
       </Switch>
-      {/*  <Footer /> */}
+      <Footer />
     </BrowserRouter>
   );
 }
