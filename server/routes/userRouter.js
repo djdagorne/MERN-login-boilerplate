@@ -72,7 +72,6 @@ router.post("/login", async (req, res) => {
       token,
       user: {
         id: user._id,
-        email: user.email,
         username: user.username,
       },
     });
@@ -99,7 +98,6 @@ router.post("/tokenIsValid", async (req, res) => {
 
     const verified = jwt.verify(token, process.env.JWT_SECRET);
     if (!verified) {
-      console.log("user");
       return res.json(false);
     }
 
@@ -109,6 +107,18 @@ router.post("/tokenIsValid", async (req, res) => {
     }
 
     return res.json(true);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.get("/", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.userId);
+    res.json({
+      id: user._id,
+      username: user.username,
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

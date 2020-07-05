@@ -58,8 +58,9 @@ body {
   line-height: 1.6;
 }
 
+/* footer magic */
 #root > div {
-  min-height: 730px;
+  min-height: 75vh;
 }
 
 img {
@@ -72,8 +73,6 @@ strong {
 }
 
 :focus {
-  outline: 3px solid var(--clr-accent);
-  outline-offset: 3px;
 }
 /* TODO REPLACE */
 /* general */
@@ -90,30 +89,44 @@ strong {
 /* header */
 
 #header {
-  height: 50px;
+  height: 3em;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid var(--clr-dark);
+  border-bottom: 1px solid var(--clr-dark);
 }
 #header .title {
   margin: 0;
   padding: 0 1rem;
+  color: var(--clr-dark);
+  text-decoration: none;
+}
+#header h1 {
+  margin: 0;
+  margin-block-start: 0;
+  margin-block-end: 0 !important;
+  padding: 0;
   color: var(--clr-dark);
 }
 #header .auth-options {
   display: flex;
 }
 #header .auth-options button {
-  padding: 0 1rem;
+  padding: 0.5rem;
   margin: 0 0.5rem;
-  font-size: 1.1rem;
-}
-#header .auth-options button:hover {
+  background: var(--clr-light);
+  color: var(--clr-dark);
+  font-size: var(--fs-body);
   border: 1px solid var(--clr-dark);
+  cursor: pointer;
 }
 
 /* form */
+
+.form {
+  max-width: 554px;
+  margin: 0 auto;
+}
 
 .form label,
 .form input {
@@ -123,7 +136,7 @@ strong {
   margin-bottom: 1rem;
 }
 .form label {
-  margin-bottom: 0.2rem;
+  margin: 0 auto;
 }
 .form input[type="text"],
 .form input[type="email"],
@@ -131,8 +144,7 @@ strong {
   width: 100%;
   padding: 0.3rem;
   border: 1px solid var(--clr-dark);
-  border-radius: 8px;
-  background-color: var(--clr-light);
+  border-radius: 0;
   font-size: 1.1rem;
 }
 .form input:focus {
@@ -142,9 +154,9 @@ strong {
 .form input[type="submit"] {
   padding: 0.3rem 0.5rem;
   border: 1px solid var(--clr-dark);
-  border-radius: 8px;
-  background-color: var(--clr-light);
+  border-radius: 0;
   font-size: 1.1rem;
+  margin: 0 auto;
 }
 
 /* error notice */
@@ -167,20 +179,12 @@ strong {
   color: #ffffff;
 }
 
-/* media queries */
-
-@media screen and (max-width: 550px) {
-  #header .auth-options button {
-    padding: 0 0.5rem;
-  }
-}
-
 /* FOOTER  */
 
 .footer {
   background: var(--clr-light);
   color: var(--clr-dark);
-  border: 1px solid var(--clr-dark);
+  border-top: 1px solid var(--clr-dark);
   text-align: center;
   padding: 1.5em 0;
 
@@ -188,6 +192,7 @@ strong {
   bottom: 0;
   left: 0;
   right: 0;
+  width: 100%;
 }
 
 .footer a {
