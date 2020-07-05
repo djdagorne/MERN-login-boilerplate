@@ -17,7 +17,5 @@
     "url": "https://github.com/djdagorne/MERN-login-boilerplate/issues"
   },
   "homepage": "https://github.com/djdagorne/MERN-login-boilerplate#readme",
-  "dependencies": {
-    "axios": "^0.19.2"
-  }
+  "dependencies": {}
 }
