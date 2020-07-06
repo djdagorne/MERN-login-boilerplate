@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 
 import AuthOptions from "../Auth/AuthOptions";
 
+import "./Header.css";
+
 export default function Header() {
   return (
     <header id="header">

@@ -3,35 +3,49 @@ import Axios from "axios";
 import { useHistory } from "react-router-dom";
 
 import UserContext from "../../context/UserContext.js";
+import ErrorNotice from "../Misc/ErrorNotice";
 
 export default function Register() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [passwordCheck, setPasswordCheck] = useState();
   const [username, setUsername] = useState();
+  const [error, setError] = useState();
 
   const { setUserData } = useContext(UserContext);
   const history = useHistory();
 
   const submit = async (e) => {
     e.preventDefault();
-    const newUser = { username, email, password, passwordCheck };
-    await Axios.post("http://localhost:5000/users/register", newUser);
-    const loginRes = await Axios.post("http://localhost:5000/users/login", {
-      email,
-      password,
-    });
-    setUserData({
-      token: loginRes.data.token,
-      user: loginRes.data.user,
-    });
-    localStorage.setItem("auth-token", loginRes.data.token);
-    history.push("/");
+    try {
+      const newUser = { username, email, password, passwordCheck };
+      await Axios.post("http://localhost:5000/users/register", newUser);
+      const loginRes = await Axios.post("http://localhost:5000/users/login", {
+        email,
+        password,
+      });
+      setUserData({
+        token: loginRes.data.token,
+        user: loginRes.data.user,
+      });
+      localStorage.setItem("auth-token", loginRes.data.token);
+      history.push("/home");
+    } catch (error) {
+      error.response.data.message && setError(error.response.data.message);
+    }
   };
   /* TODO LOOK INTO REACT FORM HOOKS PACKAGE/NPM */
   return (
     <div className="page">
       <h2>Registration</h2>
+      {error && (
+        <ErrorNotice
+          message={error}
+          clearError={() => {
+            setError(undefined);
+          }}
+        />
+      )}
       <form className="form" onSubmit={submit}>
         <label htmlFor="register-username">Username</label>
         <input

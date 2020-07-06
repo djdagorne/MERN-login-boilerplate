@@ -23,7 +23,7 @@ export default function Login() {
       user: loginRes.data.user,
     });
     localStorage.setItem("auth-token", loginRes.data.token);
-    history.push("/");
+    history.push("/home");
   };
   return (
     <div className="page">
