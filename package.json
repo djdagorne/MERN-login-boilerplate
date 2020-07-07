@@ -17,5 +17,6 @@
     "url": "https://github.com/djdagorne/MERN-login-boilerplate/issues"
   },
   "homepage": "https://github.com/djdagorne/MERN-login-boilerplate#readme",
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {}
 }
